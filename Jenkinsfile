@@ -6,13 +6,14 @@ pipeline {
     stages {
         stage("Pull SRC") {
             steps {
-                git branch: 'main', url: 'https://github.com/anushamadalli/docker-ansible-terraform-project.git'
+                git branch: 'main', url: 'https://github.com/anushamadalli/docker-terraform-ansible.git'
             }
         }
         stage("move the target") {
             steps {
                 sh 'mv target/terra.war .'
             }
+            
         }
         stage("Prepare Build") {
             steps {
@@ -37,10 +38,9 @@ pipeline {
         }
         stage("remove images locally"){
             steps{
-                sh 'docker rmi  app'
+                sh 'docker rmi app'
             }
-        }
-        
+        }        
         stage("run ansible playbook") {
             steps {
                 sshPublisher(
@@ -58,6 +58,6 @@ pipeline {
                     ]
                 )
             }
-        }
+        } 
     }
 }
